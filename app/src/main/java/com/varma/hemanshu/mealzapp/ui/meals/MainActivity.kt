@@ -1,13 +1,12 @@
-package com.varma.hemanshu.mealzapp
+package com.varma.hemanshu.mealzapp.ui.meals
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.varma.hemanshu.mealzapp.ui.theme.MealzAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,24 +14,23 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MealzAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
+                MealsCategoryScreen()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun MealsCategoryScreen() {
+    //singleton init with the help of ViewModel Lifecycle
+    val viewModel = viewModel<MealsCategoryViewModel>()
+    Text(text = "Hello Compose!")
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MealzAppTheme {
-        Greeting("Android")
+        MealsCategoryScreen()
     }
 }
