@@ -1,3 +1,10 @@
 package com.varma.hemanshu.mealzapp.model
 
-class MealsRepository
+import com.varma.hemanshu.mealzapp.model.response.MealsCategoriesResponse
+
+class MealsRepository {
+
+    fun getMeals(): MealsCategoriesResponse {
+        return MealsCategoriesResponse(arrayListOf())
+    }
+}
