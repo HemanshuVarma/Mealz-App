@@ -24,7 +24,8 @@ class MainActivity : ComponentActivity() {
 fun MealsCategoryScreen() {
     //singleton init with the help of ViewModel Lifecycle
     val viewModel = viewModel<MealsCategoryViewModel>()
-    Text(text = "Hello Compose!")
+    val meals = viewModel.getMeals()
+    Text(text = meals.toString())
 }
 
 @Preview(showBackground = true)
