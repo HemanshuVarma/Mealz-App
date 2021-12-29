@@ -6,13 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.varma.hemanshu.mealzapp.model.response.MealResponse
 import com.varma.hemanshu.mealzapp.ui.theme.MealzAppTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,12 +31,14 @@ fun MealsCategoryScreen() {
     val rememberedMealsList = remember {
         mutableStateOf<List<MealResponse>>(emptyList())
     }
+    val coroutineScope = rememberCoroutineScope()
 
-    viewModel.getMeals { response ->
-        // Returns list of meal categories OR empty list when no response
-        rememberedMealsList.value = response?.categories.orEmpty()
+    //LaunchedEffect will only run once
+    LaunchedEffect(key1 = "GET_MEAL") {
+        coroutineScope.launch {
+            rememberedMealsList.value = viewModel.getMeals()
+        }
     }
-
     LazyColumn {
         items(rememberedMealsList.value) { meal ->
             Text(text = meal.category)
