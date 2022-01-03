@@ -9,7 +9,7 @@ import com.varma.hemanshu.mealzapp.model.response.MealResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MealsCategoryViewModel(private val repository: MealsRepository = MealsRepository()) :
+class MealsCategoryViewModel(private val repository: MealsRepository = MealsRepository.getInstance()) :
     ViewModel() {
 
     val mealsState: MutableState<List<MealResponse>> = mutableStateOf(emptyList())

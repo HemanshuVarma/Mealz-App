@@ -24,20 +24,20 @@ import com.varma.hemanshu.mealzapp.model.response.MealResponse
 import com.varma.hemanshu.mealzapp.ui.theme.MealzAppTheme
 
 @Composable
-fun MealsCategoryScreen() {
+fun MealsCategoryScreen(clickCallback: (String) -> Unit) {
     //singleton init with the help of ViewModel Lifecycle
     val viewModel = viewModel<MealsCategoryViewModel>()
     val meals = viewModel.mealsState.value
 
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         items(meals) { meal ->
-            Meal(meal = meal)
+            Meal(meal = meal, clickCallback)
         }
     }
 }
 
 @Composable
-fun Meal(meal: MealResponse) {
+fun Meal(meal: MealResponse, clickCallback: (String) -> Unit) {
     var isExpanded by remember { mutableStateOf(false) }
 
     Card(
@@ -46,6 +46,7 @@ fun Meal(meal: MealResponse) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
+            .clickable { clickCallback(meal.id) }
     ) {
         Row(Modifier.animateContentSize()) {
             Image(
@@ -62,7 +63,7 @@ fun Meal(meal: MealResponse) {
                     .padding(16.dp)
                     .fillMaxWidth(0.8f)
             ) {
-                Text(text = meal.category, style = MaterialTheme.typography.h6)
+                Text(text = meal.name, style = MaterialTheme.typography.h6)
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.disabled) {
                     Text(
                         text = meal.description,
@@ -98,6 +99,6 @@ fun Meal(meal: MealResponse) {
 @Composable
 fun DefaultPreview() {
     MealzAppTheme {
-        MealsCategoryScreen()
+        MealsCategoryScreen { }
     }
 }
