@@ -95,7 +95,7 @@ fun Meal(meal: MealResponse, clickCallback: (String) -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
     MealzAppTheme {
