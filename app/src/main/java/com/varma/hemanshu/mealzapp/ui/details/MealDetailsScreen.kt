@@ -6,9 +6,10 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -30,9 +31,13 @@ import java.lang.Float.min
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun MealDetailsScreen(meal: MealResponse?) {
-    val scrollState = rememberScrollState()
-    val offset = min(1f, 1 - (scrollState.value / 600f))
-    val size by animateDpAsState(targetValue = max(100.dp, 200.dp * offset))
+    val scrollState = rememberLazyListState()
+    val offset = min(
+        1f,
+        1 - (scrollState.firstVisibleItemScrollOffset / 600f
+                + scrollState.firstVisibleItemIndex)
+    )
+    val size by animateDpAsState(targetValue = max(100.dp, 140.dp * offset))
 
     Surface(color = MaterialTheme.colors.background) {
         Column {
@@ -63,82 +68,16 @@ fun MealDetailsScreen(meal: MealResponse?) {
                     )
                 }
             }
-            Column(modifier = Modifier.verticalScroll(scrollState)) {
-                Text(
-                    text = "Hello World 1", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 2", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 3", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 4", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 5", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 6", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 7", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 8", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 9", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 10", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 11", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 12", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 13", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 14", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = "Hello World 15", modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                )
+
+            val dummyList = (1..50).map { it.toString() }
+            LazyColumn(state = scrollState) {
+                items(dummyList) { dummyItem ->
+                    Text(
+                        text = dummyItem, modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth()
+                    )
+                }
             }
         }
     }
